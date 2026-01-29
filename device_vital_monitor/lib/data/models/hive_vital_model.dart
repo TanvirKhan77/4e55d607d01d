@@ -3,6 +3,7 @@ import 'package:device_vital_monitor/domain/entities/device_vital.dart';
 
 part 'hive_vital_model.g.dart';
 
+// Hive Model class: Represents a device vital reading stored in Hive
 @HiveType(typeId: 0)
 class HiveVitalModel extends HiveObject {
   @HiveField(0)
@@ -26,6 +27,7 @@ class HiveVitalModel extends HiveObject {
   @HiveField(6)
   DateTime createdAt;
 
+  // Constructor
   HiveVitalModel({
     required this.deviceId,
     required this.timestamp,
@@ -36,6 +38,7 @@ class HiveVitalModel extends HiveObject {
     required this.createdAt,
   });
 
+  // Factory constructor: Create HiveVitalModel from DeviceVital entity
   factory HiveVitalModel.fromEntity(DeviceVital entity, {bool isSynced = false}) {
     return HiveVitalModel(
       deviceId: entity.deviceId,
@@ -48,6 +51,7 @@ class HiveVitalModel extends HiveObject {
     );
   }
 
+  // Method: Convert HiveVitalModel to DeviceVital entity
   DeviceVital toEntity() {
     return DeviceVital(
       deviceId: deviceId,

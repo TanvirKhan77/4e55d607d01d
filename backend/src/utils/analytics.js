@@ -1,8 +1,12 @@
 const { getDb } = require('../models/database');
 
+// Function: Calculate rolling averages and daily statistics for a device
 async function calculateRollingAverage(deviceId) {
     try {
+        // Get database connection
         const db = getDb();
+
+        // Query 1: Calculate averages of latest 10 readings for the device
         const query = `
             SELECT 
                 AVG(thermal_value) as avg_thermal,
@@ -17,8 +21,10 @@ async function calculateRollingAverage(deviceId) {
             )
         `;
         
+        // Execute rolling average query
         const result = await db.get(query, [deviceId]);
         
+        // Query 2: Get min/max stats for the last 24 hours
         const statsQuery = `
             SELECT 
                 MIN(thermal_value) as min_thermal,
@@ -32,8 +38,10 @@ async function calculateRollingAverage(deviceId) {
             AND timestamp >= datetime('now', '-1 day')
         `;
         
+        // Execute daily statistics query
         const stats = await db.get(statsQuery, [deviceId]);
         
+        // Return formatted analytics data
         return {
             rolling_average: {
                 thermal_value: result.avg_thermal || 0,
@@ -51,6 +59,7 @@ async function calculateRollingAverage(deviceId) {
     }
 }
 
+// Export the analytics function
 module.exports = {
     calculateRollingAverage
 };

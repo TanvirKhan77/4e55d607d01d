@@ -1,9 +1,11 @@
+// Model class: Generic API response model
 class ApiResponseModel<T> {
   final bool success;
   final T? data;
   final String? error;
   final int? statusCode;
 
+  // Constructor
   ApiResponseModel({
     required this.success,
     this.data,
@@ -11,6 +13,7 @@ class ApiResponseModel<T> {
     this.statusCode,
   });
 
+  // Factory constructor: Create ApiResponseModel from JSON
   factory ApiResponseModel.fromJson(Map<String, dynamic> json, T Function(dynamic) fromJsonT) {
     return ApiResponseModel<T>(
       success: json['success'] ?? false,
@@ -20,6 +23,7 @@ class ApiResponseModel<T> {
     );
   }
 
+  // Method: Convert ApiResponseModel to JSON
   Map<String, dynamic> toJson(dynamic Function(T) toJsonT) {
     return {
       'success': success,

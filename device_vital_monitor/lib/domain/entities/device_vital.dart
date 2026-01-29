@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+// Entity class: Represents a device vital reading
 class DeviceVital extends Equatable {
   final String deviceId;
   final DateTime timestamp;
@@ -7,6 +8,7 @@ class DeviceVital extends Equatable {
   final double batteryLevel;
   final double memoryUsage;
 
+  // Constructor
   const DeviceVital({
     required this.deviceId,
     required this.timestamp,
@@ -14,7 +16,8 @@ class DeviceVital extends Equatable {
     required this.batteryLevel,
     required this.memoryUsage,
   });
-
+ 
+  // Computed property: Get thermal status label
   String get thermalStatusLabel {
     switch (thermalValue) {
       case 0:
@@ -30,6 +33,7 @@ class DeviceVital extends Equatable {
     }
   }
 
+  // Computed property: Get thermal status description
   String get thermalStatusDescription {
     switch (thermalValue) {
       case 0:
@@ -45,6 +49,7 @@ class DeviceVital extends Equatable {
     }
   }
 
+  // Computed property: Get battery status label
   String get batteryStatusLabel {
     if (batteryLevel > 80) return 'Excellent';
     if (batteryLevel > 50) return 'Good';
@@ -52,6 +57,7 @@ class DeviceVital extends Equatable {
     return 'Critical';
   }
 
+  // Computed property: Get memory usage status label
   String get memoryStatusLabel {
     if (memoryUsage < 60) return 'Light';
     if (memoryUsage < 80) return 'Moderate';

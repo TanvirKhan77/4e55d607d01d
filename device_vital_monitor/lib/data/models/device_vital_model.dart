@@ -1,5 +1,6 @@
 import 'package:device_vital_monitor/domain/entities/device_vital.dart';
 
+// Model class: Represents a device vital reading
 class DeviceVitalModel extends DeviceVital {
   const DeviceVitalModel({
     required super.deviceId,
@@ -9,6 +10,7 @@ class DeviceVitalModel extends DeviceVital {
     required super.memoryUsage,
   });
 
+  // Factory constructor: Create DeviceVitalModel from JSON
   factory DeviceVitalModel.fromJson(Map<String, dynamic> json) {
     // Parse the timestamp
     final dateTime = DateTime.parse(json['timestamp']);
@@ -23,7 +25,8 @@ class DeviceVitalModel extends DeviceVital {
       memoryUsage: (json['memory_usage'] as num).toDouble(),
     );
   }
-
+  
+  // Method: Convert DeviceVitalModel to JSON
   Map<String, dynamic> toJson() {
     return {
       'device_id': deviceId,
@@ -34,6 +37,7 @@ class DeviceVitalModel extends DeviceVital {
     };
   }
 
+  // Factory constructor: Create DeviceVitalModel from DeviceVital entity
   factory DeviceVitalModel.fromEntity(DeviceVital entity) {
     return DeviceVitalModel(
       deviceId: entity.deviceId,

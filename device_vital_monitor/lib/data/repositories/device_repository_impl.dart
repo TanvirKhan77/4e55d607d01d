@@ -10,6 +10,7 @@ import 'package:device_vital_monitor/data/datasources/remote_data_source.dart';
 import 'package:device_vital_monitor/data/datasources/hive_data_source.dart';
 import 'package:device_vital_monitor/data/models/device_vital_model.dart';
 
+// Implementation class: Concrete device repository
 class DeviceRepositoryImpl implements DashboardRepository {
   final DeviceDataSource deviceDataSource;
   final RemoteDataSource remoteDataSource;
@@ -17,6 +18,7 @@ class DeviceRepositoryImpl implements DashboardRepository {
   final HiveDataSource hiveDataSource;
   final ConnectivityService connectivityService;
 
+  // Constructor: Requires all data sources and connectivity service
   DeviceRepositoryImpl({
     required this.deviceDataSource,
     required this.remoteDataSource,
@@ -24,7 +26,8 @@ class DeviceRepositoryImpl implements DashboardRepository {
     required this.hiveDataSource,
     required this.connectivityService,
   });
-
+ 
+  // Implementation: Get current device vitals
   @override
   Future<Either<Failure, DeviceVital>> getCurrentVitals() async {
     try {
@@ -33,9 +36,11 @@ class DeviceRepositoryImpl implements DashboardRepository {
       final memoryUsage = await deviceDataSource.getMemoryUsage();
       final deviceIdResult = await getDeviceId();
 
+      // Use fold to handle Either result
       return deviceIdResult.fold(
             (failure) => Left(failure),
             (deviceId) {
+          // Create DeviceVital entity
           final vitals = DeviceVital(
             deviceId: deviceId,
             timestamp: DateTime.now(),
@@ -43,7 +48,7 @@ class DeviceRepositoryImpl implements DashboardRepository {
             batteryLevel: batteryLevel,
             memoryUsage: memoryUsage,
           );
-          return Right(vitals);
+          return Right(vitals); // Return successful result
         },
       );
     } on DevicePlatformException catch (e) {
@@ -53,17 +58,18 @@ class DeviceRepositoryImpl implements DashboardRepository {
     }
   }
 
+  // Implementation: Get unique device identifier
   Future<Either<Failure, String>> getDeviceId() async {
     try {
       // Try to get from local cache first
-      final cachedId = await localDataSource.getCachedDeviceId();
+      final cachedId = await localDataSource.getCachedDeviceId(); // Check cache
       if (cachedId != null) {
-        return Right(cachedId);
+        return Right(cachedId); // Return cached ID if available
       }
 
       // If not cached, get from device and cache it
       final deviceId = await deviceDataSource.getDeviceId();
-      await localDataSource.cacheDeviceId(deviceId);
+      await localDataSource.cacheDeviceId(deviceId); // Cache the device ID
 
       return Right(deviceId);
     } on DevicePlatformException catch (e) {
@@ -75,9 +81,11 @@ class DeviceRepositoryImpl implements DashboardRepository {
     }
   }
 
+  // Implementation: Log device vitals
   @override
   Future<Either<Failure, Unit>> logVitals(DeviceVital vitals) async {
     try {
+      // Convert to model
       final vitalModel = DeviceVitalModel.fromEntity(vitals);
       
       // Check if online
@@ -86,6 +94,7 @@ class DeviceRepositoryImpl implements DashboardRepository {
       if (isOnline) {
         // Try to log to remote
         try {
+          // Online - send to remote server
           await remoteDataSource.logVitals(vitalModel);
           return const Right(unit);
         } on ServerException {

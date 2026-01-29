@@ -1,4 +1,6 @@
+// GET endpoint: Returns health status of the API service
 function getHealth(req, res) {
+    // Send JSON response with health info
     res.json({
         status: 'healthy',
         timestamp: new Date().toISOString(),
@@ -6,6 +8,7 @@ function getHealth(req, res) {
     });
 }
 
+// Export the function for use in routes
 module.exports = {
     getHealth
 };

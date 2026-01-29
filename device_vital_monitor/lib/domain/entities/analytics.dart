@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
 
+// Entity class: Represents analytics data for device vitals
 class RollingAverage extends Equatable {
   final double thermalValue;
   final double batteryLevel;
   final double memoryUsage;
   final int sampleCount;
 
+  // Constructor
   const RollingAverage({
     required this.thermalValue,
     required this.batteryLevel,
@@ -22,6 +24,7 @@ class RollingAverage extends Equatable {
   ];
 }
 
+// Entity class: Represents daily statistics for device vitals
 class DailyStats extends Equatable {
   final int minThermal;
   final int maxThermal;
@@ -30,6 +33,7 @@ class DailyStats extends Equatable {
   final double minMemory;
   final double maxMemory;
 
+  // Constructor
   const DailyStats({
     required this.minThermal,
     required this.maxThermal,
@@ -50,12 +54,14 @@ class DailyStats extends Equatable {
   ];
 }
 
+// Entity class: Represents overall analytics data
 class Analytics extends Equatable {
   final RollingAverage rollingAverage;
   final DailyStats dailyStats;
   final String deviceId;
   final DateTime calculatedAt;
 
+  // Constructor
   const Analytics({
     required this.rollingAverage,
     required this.dailyStats,

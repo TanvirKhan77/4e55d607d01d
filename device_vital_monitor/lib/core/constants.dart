@@ -8,6 +8,7 @@ class AppConstants {
   static const int rollingAverageWindow = 10;
 }
 
+// Class: Thermal value status mapping and descriptions
 class ThermalStatus {
   static const Map<int, String> labels = {
     0: 'Normal',
@@ -16,6 +17,7 @@ class ThermalStatus {
     3: 'Severe',
   };
 
+  // Map thermal integer values to detailed descriptions
   static const Map<int, String> descriptions = {
     0: 'Device temperature is normal',
     1: 'Device is slightly warm',
@@ -24,7 +26,9 @@ class ThermalStatus {
   };
 }
 
+// Class: Battery level status categorization
 class BatteryStatus {
+  // Method: Get battery status label based on percentage
   static String getLabel(double level) {
     if (level > 80) return 'Excellent';
     if (level > 50) return 'Good';
@@ -33,7 +37,9 @@ class BatteryStatus {
   }
 }
 
+// Class: Memory usage status categorization
 class MemoryStatus {
+  // Method: Get memory usage label based on percentage
   static String getLabel(double usage) {
     if (usage < 60) return 'Light';
     if (usage < 80) return 'Moderate';

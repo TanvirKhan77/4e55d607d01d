@@ -1,5 +1,6 @@
 import 'package:device_vital_monitor/domain/entities/analytics.dart';
 
+// Model class: Represents rolling average analytics data
 class RollingAverageModel extends RollingAverage {
   const RollingAverageModel({
     required super.thermalValue,
@@ -8,6 +9,7 @@ class RollingAverageModel extends RollingAverage {
     required super.sampleCount,
   });
 
+  // Factory constructor: Create RollingAverageModel from JSON
   factory RollingAverageModel.fromJson(Map<String, dynamic> json) {
     return RollingAverageModel(
       thermalValue: (json['thermal_value'] as num).toDouble(),
@@ -18,6 +20,7 @@ class RollingAverageModel extends RollingAverage {
   }
 }
 
+// Model class: Represents daily statistics analytics data
 class DailyStatsModel extends DailyStats {
   const DailyStatsModel({
     required super.minThermal,
@@ -28,6 +31,7 @@ class DailyStatsModel extends DailyStats {
     required super.maxMemory,
   });
 
+  // Factory constructor: Create DailyStatsModel from JSON
   factory DailyStatsModel.fromJson(Map<String, dynamic> json) {
     return DailyStatsModel(
       minThermal: json['min_thermal'] ?? 0,
@@ -40,6 +44,7 @@ class DailyStatsModel extends DailyStats {
   }
 }
 
+// Model class: Represents overall analytics data
 class AnalyticsModel extends Analytics {
   const AnalyticsModel({
     required super.rollingAverage,
@@ -48,6 +53,7 @@ class AnalyticsModel extends Analytics {
     required super.calculatedAt,
   });
 
+  // Factory constructor: Create AnalyticsModel from JSON
   factory AnalyticsModel.fromJson(Map<String, dynamic> json) {
     return AnalyticsModel(
       rollingAverage: RollingAverageModel.fromJson(json['rolling_average']),

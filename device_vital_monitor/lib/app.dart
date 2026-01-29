@@ -31,6 +31,7 @@ import 'presentation/blocs/history_bloc.dart';
 import 'presentation/screens/dashboard_screen.dart';
 import 'presentation/screens/history_screen.dart';
 
+// Main application widget
 class DeviceVitalMonitorApp extends StatefulWidget {
   const DeviceVitalMonitorApp({super.key});
 
@@ -38,6 +39,7 @@ class DeviceVitalMonitorApp extends StatefulWidget {
   State<DeviceVitalMonitorApp> createState() => _DeviceVitalMonitorAppState();
 }
 
+// State class for the main application widget
 class _DeviceVitalMonitorAppState extends State<DeviceVitalMonitorApp> {
   late Future<SharedPreferences> _sharedPreferencesFuture;
   late Future<void> _hiveInitializationFuture;
@@ -49,11 +51,13 @@ class _DeviceVitalMonitorAppState extends State<DeviceVitalMonitorApp> {
     _hiveInitializationFuture = _initializeHive();
   }
 
+  // Initialize Hive offline storage
   Future<void> _initializeHive() async {
     final hiveDataSource = HiveDataSourceImpl();
     await hiveDataSource.initializeHive();
   }
 
+  // Build method: Sets up providers and the MaterialApp
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<void>(
@@ -200,6 +204,7 @@ class _DeviceVitalMonitorAppState extends State<DeviceVitalMonitorApp> {
   }
 }
 
+// Main screen with bottom navigation
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
