@@ -52,7 +52,7 @@ Handle devices that don't support these APIs (return sensible defaults or errors
 
 **The Failures**: AI initially suggested using deprecated BatteryManager methods. I debugged by checking Android documentation and updated to use BATTERY_PROPERTY_CAPACITY instead.
 
-**The Understanding**: For the thermal status method:
+**The Understanding**: For the onLoadVitals method:
 ```dart
 Future<void> _onLoadVitals(
     LoadVitalsEvent event, // 1. Event parameter
