@@ -53,23 +53,21 @@ Handle devices that don't support these APIs (return sensible defaults or errors
 **The Failures**: AI initially suggested using deprecated BatteryManager methods. I debugged by checking Android documentation and updated to use BATTERY_PROPERTY_CAPACITY instead.
 
 **The Understanding**: For the thermal status method:
-```kotlin
-private fun getThermalStatus(): Int {
-    return try {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-            when (powerManager.currentThermalStatus) {
-                PowerManager.THERMAL_STATUS_NONE -> 0
-                // ... other status mappings
-                else -> 0
-            }
-        } else {
-            // fallback for older versions
-            0
-        }
-    } catch (e: Exception) {
-        0 // safe default
-    }
+```dart
+Future<void> _onLoadVitals(
+    LoadVitalsEvent event, // 1. Event parameter
+    Emitter<DashboardState> emit, // 2. Emitter parameter
+    ) async { // 3. Async function declaration
+  emit(const VitalsLoading()); // 4. Emit loading state
+
+  // Get device vitals using the use case
+  final result = await getDeviceVitals(); // 5. Call use case
+
+  // Handle the result and emit appropriate states
+  result.fold(
+        (failure) => emit(VitalsError(_mapFailureToMessage(failure))), // 6. Error path
+        (vitals) => emit(VitalsLoaded(vitals)), // 7. Success path
+  );
 }
 ```
 This code checks Android API level, gets the PowerManager service, reads current thermal status, maps it to our app's scale (0-3), and provides fallbacks for errors or unsupported devices.
